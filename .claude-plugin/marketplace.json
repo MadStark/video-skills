@@ -1,0 +1,13 @@
+{
+  "name": "antoine-video",
+  "owner": { "name": "Antoine" },
+  "metadata": { "description": "Skills for managing Final Cut Pro video projects in /Volumes/Recordings/Edits" },
+  "plugins": [
+    {
+      "name": "video-projects",
+      "source": "./plugins/video-projects",
+      "description": "Create FCP projects from the template, import action-cam footage, and keep library backup/media paths pointing at the right project.",
+      "version": "0.1.0"
+    }
+  ]
+}
