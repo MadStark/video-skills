@@ -17,13 +17,10 @@ function run(argv) {
   }
   if (cmd === 'make') {
     const url = $.NSURL.fileURLWithPath($(argv[1]));
-    const err = $();
-    const d = url.bookmarkDataWithOptionsIncludingResourceValuesForKeysRelativeToURLError(0, null, null, err);
-    if (!d || d.isNil()) {
-      let msg = '';
-      try { msg = err.localizedDescription.js; } catch (e) {}
-      throw new Error('bookmark creation failed for ' + argv[1] + ' ' + msg);
-    }
+    // Pass nil (not null, which JXA bridges to NSNull) for the URL/keys args and the
+    // error out-param; a Ref() error pointer segfaults osascript on failure.
+    const d = url.bookmarkDataWithOptionsIncludingResourceValuesForKeysRelativeToURLError(0, $(), $(), $());
+    if (!d || d.isNil()) throw new Error('bookmark creation failed for ' + argv[1] + ' (does the folder exist?)');
     return d.base64EncodedStringWithOptions(0).js;
   }
   throw new Error('usage: bookmark.js path <b64> | make <folder>');
